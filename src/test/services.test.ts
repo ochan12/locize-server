@@ -1,6 +1,5 @@
 import { test } from "tap";
-import { fetchLanguages, getCurrentLanguage, getKey, recurrentFetchServer, setKey } from ".";
-import { fetchLocizeLanguages } from "./locize";
+import { fetchLanguages, getCurrentLanguage, getKey, setKey } from "../services";
 const dotenv = require("dotenv").config();
 
 test("UNIT TEST SERVICES", async (t) => {
