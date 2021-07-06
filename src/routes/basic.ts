@@ -2,6 +2,7 @@ import {
   FastifyInstance,
   FastifyPluginOptions,
 } from "fastify";
+const swagger = require("../swagger.json");
 
 export async function basicRoutes(
   fastify: FastifyInstance,
@@ -11,6 +12,6 @@ export async function basicRoutes(
     reply.code(200).send({ service: "locize-server" });
   });
   fastify.get("/swagger", async (request, reply) => {
-    reply.code(200).send("Swagger")
+    reply.code(200).send(swagger)
   });
 }

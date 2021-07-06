@@ -19,7 +19,7 @@ export async function fetchLanguages(): Promise<Array<ApplanguageCode>> {
 
 /**
  * Function to fetch the locize server languages described in .env or available in the
- * in the server
+ * in the server, and update keys
  */
 export function recurrentFetchServer() {
   return fetchLanguages().then((languages) => {
@@ -35,13 +35,13 @@ export function recurrentFetchServer() {
   });
 }
 
-export async function getCurrentLanguage(language: ApplanguageCode) {
+export async function getCurrentLanguage(language: ApplanguageCode, version = ENV.VERSION, namespace = ENV.NAMESPACE) {
   let cacheLanguage: any = await getKey(`${language}`);
   if (!cacheLanguage) {
     let response = await getLocizeLanguage(
       language,
-      ENV.VERSION,
-      ENV.NAMESPACE
+      version,
+      namespace
     );
     setKey(`${language}`, response.data);
     cacheLanguage = response.data;

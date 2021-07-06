@@ -3,6 +3,7 @@ import {
   FastifyPluginOptions,
   RequestGenericInterface,
 } from "fastify";
+import { getKey, getLocizeLanguage, setKey } from "../services";
 import { getCurrentLanguage } from "../services/languages";
 import { ApplanguageCode } from "../types";
 
@@ -11,7 +12,14 @@ interface GetLanguageParams extends RequestGenericInterface {
   Params: {
     language: ApplanguageCode;
   };
-  QueryString: {};
+  Querystring: {
+    version?: string;
+    namespace?: string;
+  };
+  Query: {
+    version?: string;
+    namespace?: string;
+  };
   Headers: {};
 }
 
@@ -25,13 +33,27 @@ export async function languageRoutes(
   fastify.get<GetLanguageParams>(
     "/language/:language",
     async (request, reply) => {
-      let language = await getCurrentLanguage(request.params.language);
-      reply.code(200).send(language)
+      const { version, namespace } = request.query;
+      let language = await getCurrentLanguage(
+        request.params.language,
+        version,
+        namespace
+      );
+      reply.code(200).send(language);
     }
   );
 
   /**
    * Refetch locize
    */
-  fastify.post("/refresh/:language", function (request, reply) {});
+  fastify.post<GetLanguageParams>(
+    "/refresh/:language",
+    async (request, reply) => {
+      const { version, namespace } = request.query;
+      const { language } = request.params;
+      const remoteLanguage = await getLocizeLanguage(language, version, namespace);
+      await setKey(language, remoteLanguage);
+      return getKey(language)
+    }
+  );
 }

@@ -1,0 +1,156 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Locize Cache server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string",
+                      "default": "locize-server"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/swagger": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cache/{key}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "description": "Language to fetch",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Language configuration"
+          }
+        }
+      },
+      "post": {
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "description": "Language to post",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "All the translations you want to add to the language",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": {
+                "hola": "hello"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Language configuration updated"
+          }
+        }
+      }
+    },
+    "/language/{key}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "description": "Language to fetch",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "description": "locize version different from env",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "namespace",
+            "in": "query",
+            "description": "locize namespace different from env",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Language configuration"
+          }
+        }
+      }
+    },
+    "/refresh/{language}": {
+      "post": {
+        "parameters": [
+          {
+            "name": "language",
+            "in": "path",
+            "description": "Language to refresh",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New language configuration"
+          }
+        }
+      }
+    }
+  }
+}
