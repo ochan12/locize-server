@@ -1,8 +1,13 @@
-**Install dependencies**
+# Locize Cache Server
 
-```yarn add```
+This is [Fastify](https://www.fastify.io/) server app intended to use as a proxy cache between Locize and your app
+which fetches the languages keys between a given or it has endpoints to update manually.
 
-**Create environment variables**
+## Install dependencies
+
+`yarn add`
+
+## Create environment variables
 
 This are the variables used to build the locize urls and run the app:
 
@@ -19,15 +24,24 @@ SELF_UPDATE_RATE=3600                           # Seconds between self update ru
 VERSION=latest                                  # Locize version
 NAMESPACE=translation                           # Locize namespace
 CACHE_CLIENT=JSON                               # Cache client to be used (JSON | REDIS)
-TARGET_ENV=testing                              # Env var used for app parameters 
-LANGUAGES=test                                  # (Optional) if you want to set the langues codes instead of the app 
+TARGET_ENV=testing                              # Env var used for app parameters
+LANGUAGES=test                                  # (Optional) if you want to set the langues codes instead of the app
                                                   looking them up in the locize server
 ```
 
-**Run dev**
+## Run dev
 
-```yarn run dev```
+`yarn run dev`
 
-**Run test**
+## Routes
 
-```yarn run test```
+- **GET /language/:language**
+- **POST /refresh/:key**
+- **GET /cache/:key**
+- **POST /language/:language**
+- **GET /**
+- **GET /swagger**
+
+## Run tests
+
+`yarn run test`
