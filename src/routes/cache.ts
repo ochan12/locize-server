@@ -9,7 +9,6 @@ interface CacheParams extends RequestGenericInterface {
   Body: {};
   Params: {
     key: string;
-    method: "set" | "get";
   };
   QueryString: {};
   Headers: {};
@@ -22,12 +21,15 @@ export async function cacheRoutes(
   /**
    * Basic endpoint to fetch and set specific language
    */
-  fastify.get<CacheParams>("/cache/:method/:key", function (request, reply) {
-    const { method, key } = request.params;
-    if (method === "set") {
-      setKey(key, request.body);
-    } else if (method === "get") {
-      getKey(key, false);
-    }
+  fastify.get<CacheParams>("/cache/:key", async (request, reply) => {
+    const { key } = request.params;
+    const value = await getKey(key, false);
+    reply.code(200).send(value);
+  });
+  fastify.post<CacheParams>("/cache/:key", async (request, reply) => {
+    const { key } = request.params;
+    await setKey(key, request.body);
+    const newValue = await getKey(key);
+    reply.code(200).send(newValue);
   });
 }

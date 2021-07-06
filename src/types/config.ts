@@ -7,5 +7,7 @@ export interface APP_ENV {
   LANGUAGES: Array<ApplanguageCode>;
   VERSION: string;
   NAMESPACE: string;
-  SELF_UPDATE: boolean
+  SELF_UPDATE?: boolean
+  SELF_UPDATE_RATE?: number
+  TARGET_ENV?: string;
 }

@@ -2,7 +2,7 @@ import { ApplanguageCode } from "../types";
 import { getKey, setKey } from "./cache";
 import { ENV } from "./env";
 import { getLocizeLanguage, fetchLocizeLanguages } from "./locize";
-const LANGUAGE_PREFIX = "language::";
+export const LANGUAGE_PREFIX = "language::";
 
 /**
  *
@@ -26,7 +26,7 @@ export function recurrentFetchServer() {
     return Promise.all(
       languages.map((lang) =>
         getLocizeLanguage(lang, ENV.VERSION, ENV.NAMESPACE).then((locizeData) =>{
-          setKey(`${LANGUAGE_PREFIX}${lang}`, locizeData.data)
+          setKey(`${lang}`, locizeData.data)
         }
         )
       )
@@ -35,14 +35,14 @@ export function recurrentFetchServer() {
 }
 
 export async function getCurrentLanguage(language: ApplanguageCode) {
-  let cacheLanguage: any = await getKey(`${LANGUAGE_PREFIX}${language}`);
+  let cacheLanguage: any = await getKey(`${language}`);
   if (!cacheLanguage) {
     let response = await getLocizeLanguage(
       language,
       ENV.VERSION,
       ENV.NAMESPACE
     );
-    setKey(`${LANGUAGE_PREFIX}${language}`, response.data);
+    setKey(`${language}`, response.data);
     cacheLanguage = response.data;
   }
   return cacheLanguage;

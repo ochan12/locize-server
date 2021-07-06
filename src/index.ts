@@ -7,8 +7,9 @@ console.log(ENV);
 /**
  * Initial setup fetch from locize. Set the refresh rate at 1h.
  */
-recurrentFetchServer();
-if (ENV.SELF_UPDATE) setInterval(() => recurrentFetchServer(), 3600000);
+if (ENV.TARGET_ENV && ENV.TARGET_ENV === "production") recurrentFetchServer();
+if (ENV.SELF_UPDATE)
+  setInterval(() => recurrentFetchServer(), ENV.SELF_UPDATE_RATE * 1000);
 
 fastify.listen(process.env.PORT, "0.0.0.0", function (err, address) {
   if (err) {

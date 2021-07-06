@@ -3,9 +3,7 @@ import {
   FastifyPluginOptions,
   RequestGenericInterface,
 } from "fastify";
-import { REPL_MODE_SLOPPY } from "repl";
 import { getCurrentLanguage } from "../services/languages";
-import { getLocizeLanguage } from "../services/locize";
 import { ApplanguageCode } from "../types";
 
 interface GetLanguageParams extends RequestGenericInterface {
@@ -26,10 +24,9 @@ export async function languageRoutes(
    */
   fastify.get<GetLanguageParams>(
     "/language/:language",
-    function (request, reply) {
-      getCurrentLanguage(request.params.language).then((data) =>
-        reply.code(200).send(data)
-      );
+    async (request, reply) => {
+      let language = await getCurrentLanguage(request.params.language);
+      reply.code(200).send(language)
     }
   );
 

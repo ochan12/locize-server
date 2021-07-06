@@ -1,4 +1,5 @@
 import { ApplanguageCode } from "../types";
+import { LANGUAGE_PREFIX } from "./";
 
 const memoryObject: Map<ApplanguageCode | string, any> = new Map();
 
@@ -10,11 +11,11 @@ const memoryObject: Map<ApplanguageCode | string, any> = new Map();
  */
 export async function setKey(
   key: ApplanguageCode | string,
-  value: string | number | any,
+  value: any,
   ttl = 3600
 ) {
-  memoryObject.set(key, value);
-  console.log("Cache updated", key);
+  memoryObject.set(`${LANGUAGE_PREFIX}${key}`, value);
+  console.log("Cache updated", `${LANGUAGE_PREFIX}${key}`);
 }
 
 /**
@@ -23,5 +24,5 @@ export async function setKey(
  * @param force_refresh If we want to refresh the value before getting it
  */
 export async function getKey(key: string, force_refresh = false) {
-  return memoryObject.get(key);
+  return memoryObject.get(`${LANGUAGE_PREFIX}${key}`);
 }
