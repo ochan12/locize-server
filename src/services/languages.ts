@@ -22,12 +22,13 @@ export async function fetchLanguages(): Promise<Array<ApplanguageCode>> {
  * in the server
  */
 export function recurrentFetchServer() {
-  fetchLanguages().then((languages) => {
+  return fetchLanguages().then((languages) => {
     return Promise.all(
-      languages.map((lang) =>
-        getLocizeLanguage(lang, ENV.VERSION, ENV.NAMESPACE).then((locizeData) =>{
-          setKey(`${lang}`, locizeData.data)
-        }
+      languages.map(async (lang) =>
+        getLocizeLanguage(lang, ENV.VERSION, ENV.NAMESPACE).then(
+          (locizeData) => {
+            setKey(`${lang}`, locizeData.data);
+          }
         )
       )
     );
