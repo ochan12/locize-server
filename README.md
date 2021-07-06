@@ -17,7 +17,8 @@ PORT=3000                                       # Where to run the app
 SELF_UPDATE=false                               # Let the locize app update itself every {SELF_UPDATE_RATE} seconds
 SELF_UPDATE_RATE=3600                           # Seconds between self update runs
 VERSION=latest                                  # Locize version
-NAMESPACE=translation                           # Locize  namespace
+NAMESPACE=translation                           # Locize namespace
+CACHE_CLIENT=JSON                               # Cache client to be used (JSON | REDIS)
 TARGET_ENV=testing                              # Env var used for app parameters 
 LANGUAGES=test                                  # (Optional) if you want to set the langues codes instead of the app 
                                                   looking them up in the locize server

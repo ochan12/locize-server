@@ -10,4 +10,9 @@ export interface APP_ENV {
   SELF_UPDATE?: boolean
   SELF_UPDATE_RATE?: number
   TARGET_ENV?: string;
+  CACHE_CLIENT?: string;
+  REDIS_HOST?: string;
+  REDIS_USER?: string;
+  REDIS_PASS?: string;
+  REDIS_PORT?: number;
 }

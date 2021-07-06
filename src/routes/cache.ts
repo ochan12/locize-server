@@ -3,7 +3,7 @@ import {
   FastifyPluginOptions,
   RequestGenericInterface,
 } from "fastify";
-import { getKey, setKey } from "../services/cache";
+import { getKey, setKey } from "../services/cache/cache";
 
 interface CacheParams extends RequestGenericInterface {
   Body: {};
@@ -28,8 +28,8 @@ export async function cacheRoutes(
   });
   fastify.post<CacheParams>("/cache/:key", async (request, reply) => {
     const { key } = request.params;
-    await setKey(key, request.body);
-    const newValue = await getKey(key);
+    await setKey(key, request.body)
+    const newValue = await getKey(key, false);
     reply.code(200).send(newValue);
   });
 }

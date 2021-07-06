@@ -15,7 +15,8 @@ export async function getLocizeLanguage(
   namespace = "translation"
 ) {
   const { PROJECT_ID, VERSION, NAMESPACE } = ENV;
-  return axiosLocize.get<LocizeLanguage>(
+  const languageData = await axiosLocize.get<LocizeLanguage>(
     `/${PROJECT_ID}/${VERSION || version}/${language}/${NAMESPACE || namespace}`
   );
+  return languageData.data
 }

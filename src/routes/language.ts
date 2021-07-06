@@ -51,9 +51,10 @@ export async function languageRoutes(
     async (request, reply) => {
       const { version, namespace } = request.query;
       const { language } = request.params;
-      const remoteLanguage = await getLocizeLanguage(language, version, namespace);
-      await setKey(language, remoteLanguage);
-      return getKey(language)
+      const newKey = await getKey(language, true, () =>
+        getLocizeLanguage(language, version, namespace)
+      );
+      return newKey;
     }
   );
 }
